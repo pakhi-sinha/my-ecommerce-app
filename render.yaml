@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ecommerce-backend
+    env: docker
+    plan: free
+    rootDir: Backend
+    buildCommand: docker build -t ecommerce-backend .
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PORT
+        value: 3001
+    autoDeploy: true
+  - type: static_site
+    name: ecommerce-frontend
+    buildCommand: ""
+    publishPath: Frontend
+    autoDeploy: true

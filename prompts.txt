@@ -1,0 +1,15 @@
+Initial Creation Prompts (Chronological)
+
+1) "Iteratively build and deploy a complete e-commerce product page app with cart & checkout features, including frontend, backend, and database integration. Develop step by step: UI → Backend API → Database schema → Business logic. Must include product listing, cart management, checkout, confirmation page, deploy the full stack app on a public platform, and submit a .txt file capturing all creation prompts (excluding debugging). Explain prompt architecture (showcasing agentic AI / MCPs usage)."
+
+2) "Scan existing backend, frontend, and compose files to understand current state before planning tasks."
+
+3) "Create structured task list: connect backend to MongoDB and session store; create models and seed products; refactor cart endpoints to use session-backed cart; persist orders; add configurable API base; fix docker-compose paths; add deployment configs; create prompts log."
+
+4) "Implement MongoDB connection, session storage, Mongoose models, product seeding, and update API endpoints accordingly."
+
+5) "Centralize frontend API base via config.js and update all fetch calls to include credentials and use API base."
+
+6) "Fix docker-compose paths (Backend/Frontend capitalization) and ensure environment variables are set."
+
+7) "Add deployment configuration (Render web service + static site) and README with setup and deployment steps."

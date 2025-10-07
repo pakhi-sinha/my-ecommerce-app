@@ -1,0 +1,41 @@
+# docker-compose.yml
+
+# Defines the different services (containers) that make up our application.
+services:
+  
+  # 1. The Backend Service
+  backend:
+    build: ./Backend  # Correct path capitalization for Windows repo
+    ports:
+      - "3001:3001"    # Maps port 3001 on the host machine to port 3001 in the container.
+    environment:
+      # In a real app, you would modify server.js to connect to this MongoDB URL.
+      MONGO_URI: mongodb://database:27017/e-commerce
+      SESSION_SECRET: change_me_in_prod
+    depends_on:
+      - database       # Ensures the 'database' service starts before the 'backend' service.
+
+  # 2. The Database Service
+  database:
+    image: mongo:7.0 # Pin to a stable MongoDB tag.
+    ports:
+      - "27017:27017"    # Maps the default MongoDB port for potential direct access.
+    volumes:
+      - mongo-data:/data/db # Persists the database data on the host machine in a volume named 'mongo-data'.
+    restart: unless-stopped
+
+  # 3. The Frontend Service
+  frontend:
+    image: nginx:alpine   # Uses a lightweight Nginx web server image to serve our static files.
+    ports:
+      - "8080:80"        # Maps port 8080 on the host machine to port 80 (standard HTTP) in the container.
+    volumes:
+      # Mounts our local './frontend' directory into the Nginx container's web root directory.
+      # This means Nginx will serve the files directly from your folder.
+      - ./Frontend:/usr/share/nginx/html
+    depends_on:
+      - backend          # Ensures the backend is running before the frontend can be accessed.
+
+# Defines the named volume used by the database service for data persistence.
+volumes:
+  mongo-data:

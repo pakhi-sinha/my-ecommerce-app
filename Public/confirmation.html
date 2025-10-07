@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="confirmation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YourStore</a>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span>Bag</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="confirmation-container">
+            <div class="confirmation-header">
+                <div class="success-icon">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+                <h1>Thank you for your order!</h1>
+                <p>Your order has been placed successfully.</p>
+                <p class="order-number">Order ID: #YS1023456789</p>
+            </div>
+
+            <div class="delivery-details">
+                <div class="delivery-estimate">
+                    <i class="fa fa-truck"></i>
+                    <h2>Estimated Delivery by Oct 12, 2025</h2>
+                </div>
+                <div class="shipping-address">
+                    <h3>Delivering to:</h3>
+                    <p><strong>John Doe</strong></p>
+                    <p>123 Tech Park, Silicon Valley, Bengaluru, Karnataka - 560100</p>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <!-- **** THIS IS THE NEW CONTAINER FOR ITEMS **** -->
+                <div id="summary-items-list">
+                    <!-- Placeholder Item -->
+                    <div class="summary-item">
+                        <!-- Content will be replaced by JS -->
+                    </div>
+                </div>
+                <!-- The total is now outside the item list -->
+                <div class="summary-total">
+                    <span>Total Paid:</span>
+                    <span>₹0.00</span>
+                </div>
+            </div>
+            
+            <div class="confirmation-actions">
+                <a href="index.html" class="continue-shopping-btn">CONTINUE SHOPPING</a>
+            </div>
+        </div>
+    </main>
+    <script src="config.js"></script>
+    <script src="confirmation.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Product Listing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="#">YourStore</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products, brands and more">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span>Bag</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-content">
+            <aside class="filters">
+                <h3>FILTERS</h3>
+                <div class="filter-group">
+                    <h4>CATEGORIES</h4>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat1" name="cat1">
+                        <label for="cat1">T-Shirts</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat2" name="cat2">
+                        <label for="cat2">Shirts</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat3" name="cat3">
+                        <label for="cat3">Jeans</label>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>BRAND</h4>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand1" name="brand1">
+                        <label for="brand1">Brand A</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand2" name="brand2">
+                        <label for="brand2">Brand B</label>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>PRICE</h4>
+                    <div class="filter-option">
+                        <input type="radio" id="price1" name="price">
+                        <label for="price1">Under ₹500</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="radio" id="price2" name="price">
+                        <label for="price2">₹500 to ₹1000</label>
+                    </div>
+                </div>
+            </aside>
+            <section class="products-section">
+                <div class="product-grid">
+                    <!-- Product Card 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product" alt="Product Name">
+                            <span class="wishlist-icon"><i class="far fa-heart"></i></span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Brand Name</h3>
+                            <h4 class="product-name">Men Regular Fit Solid T-Shirt</h4>
+                            <div class="product-price">
+                                <span class="current-price">₹799</span>
+                                <span class="original-price">₹1499</span>
+                                <span class="discount">(45% OFF)</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i> 4.3 | 1.2k
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn">ADD TO CART</button>
+                    </div>
+                    <!-- Repeat Product Card for more products -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product" alt="Product Name">
+                            <span class="wishlist-icon"><i class="far fa-heart"></i></span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Brand Name</h3>
+                            <h4 class="product-name">Men Slim Fit Casual Shirt</h4>
+                            <div class="product-price">
+                                <span class="current-price">₹1199</span>
+                                <span class="original-price">₹1999</span>
+                                <span class="discount">(40% OFF)</span>
+                            </div>
+                             <div class="product-rating">
+                                <i class="fa fa-star"></i> 4.1 | 850
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn">ADD TO CART</button>
+                    </div>
+                     <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product" alt="Product Name">
+                            <span class="wishlist-icon"><i class="far fa-heart"></i></span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Another Brand</h3>
+                            <h4 class="product-name">Relaxed Fit Denim Jeans</h4>
+                            <div class="product-price">
+                                <span class="current-price">₹1499</span>
+                                <span class="original-price">₹2999</span>
+                                <span class="discount">(50% OFF)</span>
+                            </div>
+                             <div class="product-rating">
+                                <i class="fa fa-star"></i> 4.5 | 2.5k
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn">ADD TO CART</button>
+                    </div>
+                     <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product" alt="Product Name">
+                            <span class="wishlist-icon"><i class="far fa-heart"></i></span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-brand">Brand C</h3>
+                            <h4 class="product-name">Striped Polo T-Shirt</h4>
+                            <div class="product-price">
+                                <span class="current-price">₹899</span>
+                                <span class="original-price">₹1799</span>
+                                <span class="discount">(50% OFF)</span>
+                            </div>
+                             <div class="product-rating">
+                                <i class="fa fa-star"></i> 4.2 | 980
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn">ADD TO CART</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+<script src="config.js"></script>
+<script src="script.js" defer></script>
+</body>
+</html>

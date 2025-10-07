@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style.css"> <!-- Reusing the main style for the header -->
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header secure-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YourStore</a>
+            </div>
+            <div class="secure-checkout-badge">
+                <i class="fa fa-lock"></i>
+                <span>100% SECURE</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="checkout-layout">
+            <!-- Checkout Steps -->
+            <div class="checkout-steps">
+                
+                <!-- Step 1: Shipping Address -->
+                <div class="checkout-step active">
+                    <div class="step-header">
+                        <h2><span class="step-number">1</span> Shipping Address</h2>
+                    </div>
+                    <div class="step-content">
+                        <!-- THE SUBMIT EVENT ON THIS FORM IS WHAT WE'RE LISTENING FOR -->
+                        <form class="address-form"> 
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">Mobile Number</label>
+                                    <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
+                                </div>
+                            </div>
+                             <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" id="pincode" placeholder="Enter your pincode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" placeholder="Enter your city" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address (House No, Building, Street, Area)</label>
+                                <textarea id="address" rows="3" placeholder="Enter your full address" required></textarea>
+                            </div>
+                            <!-- **** THIS IS THE CORRECTED LINE **** -->
+                            <button type="submit" class="save-address-btn">SAVE AND DELIVER HERE</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 2: Order Summary (for mobile view) -->
+                <div class="checkout-step mobile-summary">
+                     <div class="step-header">
+                        <h2><span class="step-number">2</span> Order Summary</h2>
+                    </div>
+                    <div class="step-content">
+                        <!-- Content will be same as the desktop summary -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment Information -->
+                <div class="checkout-step">
+                    <div class="step-header">
+                        <h2><span class="step-number">3</span> Payment Method</h2>
+                    </div>
+                    <div class="step-content hidden">
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="upi" required>
+                                <i class="fab fa-google-pay"></i> UPI
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="card">
+                                <i class="fa fa-credit-card"></i> Credit/Debit Card
+                            </label>
+                             <label class="payment-option">
+                                <input type="radio" name="payment" value="netbanking">
+                                <i class="fa fa-university"></i> Netbanking
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cod">
+                                <i class="fa fa-money-bill-wave"></i> Cash on Delivery (COD)
+                            </label>
+                        </div>
+                        <button type="button" class="place-order-btn">PLACE ORDER</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Order Summary (for desktop) -->
+            <div class="order-summary-fixed">
+                 <h4>ORDER SUMMARY</h4>
+                 <div class="summary-items">
+                     <!-- Items will be populated by checkout.js -->
+                 </div>
+                 <div class="price-details">
+                     <!-- Price will be populated by checkout.js -->
+                 </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="config.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

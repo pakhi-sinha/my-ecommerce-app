@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="style.css"> <!-- Reusing the main style for the header -->
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">YourStore</a> <!-- Link back to the product page -->
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products, brands and more">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+                <a href="cart.html" class="nav-item">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span>Bag</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="cart-page">
+            <h1>Your Shopping Bag</h1>
+            <div class="cart-layout">
+                <!-- Cart Items Section -->
+                <div class="cart-items-list">
+                    <!-- Item 1 -->
+                    <div class="cart-item">
+                        <div class="item-image">
+                            <img src="https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product1" alt="Product Image">
+                        </div>
+                        <div class="item-details">
+                            <p class="item-brand">Brand A</p>
+                            <p class="item-name">Men Regular Fit Solid T-Shirt</p>
+                            <div class="item-price">
+                                <span class="current-price">₹799</span>
+                                <span class="original-price">₹1499</span>
+                                <span class="discount">(45% OFF)</span>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn minus">-</button>
+                                    <input type="text" class="quantity-input" value="1">
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                                <button class="remove-btn">REMOVE</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="cart-item">
+                        <div class="item-image">
+                            <img src="https://placehold.co/300x400/4682B4/FFFFFF&text=Product3" alt="Product Image">
+                        </div>
+                        <div class="item-details">
+                            <p class="item-brand">Brand A</p>
+                            <p class="item-name">Relaxed Fit Denim Jeans</p>
+                             <div class="item-price">
+                                <span class="current-price">₹1499</span>
+                                <span class="original-price">₹2999</span>
+                                <span class="discount">(50% OFF)</span>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn minus">-</button>
+                                    <input type="text" class="quantity-input" value="1">
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                                <button class="remove-btn">REMOVE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Section -->
+                <div class="order-summary">
+                    <h4>ORDER DETAILS</h4>
+                    <div class="summary-line">
+                        <span>Bag Total</span>
+                        <span>₹2298.00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping Fee</span>
+                        <span class="free">FREE</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Amount</span>
+                        <span>₹2298.00</span>
+                    </div>
+                    <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script src="config.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap');
+
+/* --- General Styles --- */
+body {
+    font-family: 'Assistant', sans-serif;
+    margin: 0;
+    background-color: #f5f5f6;
+    color: #282c3f;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.main-header {
+    background-color: #ffffff;
+    padding: 15px 0;
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    color: #282c3f;
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin: 0 40px;
+    display: flex;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #f5f5f6;
+    background-color: #f5f5f6;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #f5f5f6;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    color: #696e79;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    text-align: center;
+    margin-left: 30px;
+    text-decoration: none;
+    color: #282c3f;
+}
+
+.nav-item i {
+    font-size: 18px;
+    display: block;
+}
+
+.nav-item span {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* --- Main Content --- */
+.page-content {
+    display: flex;
+    margin-top: 30px;
+}
+
+/* --- Filters Sidebar --- */
+.filters {
+    width: 250px;
+    flex-shrink: 0;
+    padding-right: 20px;
+}
+
+.filters h3 {
+    font-size: 16px;
+    border-bottom: 1px solid #eaeaec;
+    padding-bottom: 10px;
+}
+
+.filter-group {
+    padding: 20px 0;
+    border-bottom: 1px solid #eaeaec;
+}
+
+.filter-group h4 {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+}
+
+.filter-option {
+    margin-bottom: 10px;
+}
+
+.filter-option label {
+    font-size: 14px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/* --- Products Section --- */
+.products-section {
+    width: 100%;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    overflow: hidden;
+    text-decoration: none;
+    color: #282c3f;
+    position: relative;
+    border: 1px solid transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,.1);
+    border-color: #eaeaec;
+}
+
+.product-image {
+    position: relative;
+}
+
+.product-image img {
+    width: 100%;
+    display: block;
+}
+
+.wishlist-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.product-info {
+    padding: 10px;
+}
+
+.product-brand {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #535766;
+    margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.current-price {
+    font-weight: 700;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #7e818c;
+    margin-left: 5px;
+}
+
+.discount {
+    color: #ff905a;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.product-rating {
+    font-size: 13px;
+    color: #282c3f;
+    font-weight: 600;
+}
+
+.product-rating i {
+    color: #f5c71a;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff3e6c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    display: none; /* Initially hidden */
+}
+
+.product-card:hover .add-to-cart-btn {
+    display: block; /* Show on hover */
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .filters {
+        display: none; /* Hide filters on smaller screens for simplicity */
+    }
+
+    .search-bar {
+        margin: 0 15px;
+    }
+    
+    .main-nav .nav-item span {
+        display: none; /* Hide text on mobile, show only icons */
+    }
+}
