@@ -5,8 +5,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const app = express();
+
 // NOTE: Vercel handles the PORT automatically.
-const MONGO_URI = process.env.MONGO_URI; // This now comes from Vercel's environment variables
+const MONGO_URI = process.env.MONGO_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'prod_session_secret_please_change';
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || undefined;
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -34,7 +35,7 @@ app.use(
   })
 );
 
-// 3. Database & Models (No changes here)
+// 3. Database & Models
 const productSchema = new mongoose.Schema({
   id: { type: Number, unique: true, index: true },
   brand: String,
@@ -62,6 +63,7 @@ const orderSchema = new mongoose.Schema({
 });
 const Product = mongoose.model('Product', productSchema);
 const Order = mongoose.model('Order', orderSchema);
+
 const seedProducts = [
   { id: 1, brand: 'Brand A', name: 'Men Regular Fit Solid T-Shirt', price: 799, originalPrice: 1499, category: 'T-Shirts', rating: 4.3, ratingCount: 1200, image: 'https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product1' },
   { id: 2, brand: 'Brand B', name: 'Men Slim Fit Casual Shirt', price: 1199, originalPrice: 1999, category: 'Shirts', rating: 4.1, ratingCount: 850, image: 'https://placehold.co/300x400/CD5C5C/FFFFFF&text=Product2' },
@@ -72,6 +74,7 @@ const seedProducts = [
   { id: 7, brand: 'Brand A', name: 'Graphic Print T-Shirt', price: 480, originalPrice: 899, category: 'T-Shirts', rating: 4.0, ratingCount: 750, image: 'https://placehold.co/300x400/708090/FFFFFF&text=Product7' },
   { id: 8, brand: 'Brand D', name: 'Cargo Style Trousers', price: 1999, originalPrice: 3499, category: 'Jeans', rating: 4.7, ratingCount: 4200, image: 'https://placehold.co/300x400/5F9EA0/FFFFFF&text=Product8' }
 ];
+
 function getSessionCart(req) {
   if (!req.session.cart) {
     req.session.cart = [];
@@ -89,11 +92,10 @@ mongoose.connect(MONGO_URI, { dbName: undefined }).then(async () => {
   }
 }).catch(err => console.error('Failed to connect to MongoDB', err));
 
-
-// 5. API ROUTES / ENDPOINTS (UPDATED: '/api' removed from all routes)
+// 5. API ROUTES (with /api prefix)
 
 // ====== PRODUCT ENDPOINTS ======
-app.get('/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
   try {
     const products = await Product.find().sort({ id: 1 }).lean();
     res.json(products);
@@ -101,7 +103,7 @@ app.get('/products', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch products' });
   }
 });
-app.get('/products/:id', async (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
   const productId = parseInt(req.params.id, 10);
   try {
     const product = await Product.findOne({ id: productId }).lean();
@@ -113,11 +115,11 @@ app.get('/products/:id', async (req, res) => {
 });
 
 // ====== CART MANAGEMENT ENDPOINTS ======
-app.get('/cart', (req, res) => {
+app.get('/api/cart', (req, res) => {
   const cart = getSessionCart(req);
   res.json(cart);
 });
-app.post('/cart', async (req, res) => {
+app.post('/api/cart', async (req, res) => {
   const { productId, quantity } = req.body;
   const qty = parseInt(quantity || 1, 10);
   if (!productId || qty <= 0) {
@@ -139,7 +141,7 @@ app.post('/cart', async (req, res) => {
     res.status(500).json({ message: 'Failed to add to cart' });
   }
 });
-app.put('/cart/:productId', (req, res) => {
+app.put('/api/cart/:productId', (req, res) => {
   const productId = parseInt(req.params.productId, 10);
   const { quantity } = req.body;
   const qty = parseInt(quantity, 10);
@@ -156,7 +158,7 @@ app.put('/cart/:productId', (req, res) => {
   }
   res.json(cart);
 });
-app.delete('/cart/:productId', (req, res) => {
+app.delete('/api/cart/:productId', (req, res) => {
   const productId = parseInt(req.params.productId, 10);
   const cart = getSessionCart(req);
   const itemIndex = cart.findIndex((item) => item.productId === productId);
@@ -168,36 +170,8 @@ app.delete('/cart/:productId', (req, res) => {
 });
 
 // ====== CHECKOUT ENDPOINT ======
-app.post('/checkout', async (req, res) => {
-  const { customerInfo } = req.body;
-  const cart = getSessionCart(req);
-  if (!customerInfo || !customerInfo.name || !customerInfo.address) {
-    return res.status(400).json({ message: 'Customer information is required.' });
-  }
-  if (!cart || cart.length === 0) {
-    return res.status(400).json({ message: 'Cannot checkout with an empty cart.' });
-  }
-  try {
-    const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const orderPayload = {
-      orderId: `YS${Date.now()}`,
-      customerInfo,
-      items: [...cart],
-      totalAmount,
-      orderDate: new Date()
-    };
-    const saved = await Order.create(orderPayload);
-    req.session.cart = [];
-    res.status(201).json({ message: 'Checkout successful! Order has been placed.', order: saved });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to place order' });
-  }
+app.post('/api/checkout', async (req, res) => {
+  // TODO: Implement checkout logic here
+  res.status(501).json({ message: 'Checkout not implemented yet' });
 });
-
-// ====== ROOT ROUTE ======
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the E-commerce API' });
-});
-
-// 6. EXPORT THE APP FOR VERCEL (UPDATED: No more app.listen)
 module.exports = app;
