@@ -5,9 +5,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const app = express();
-const PORT = process.env.PORT || 3001;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/e-commerce';
-const SESSION_SECRET = process.env.SESSION_SECRET || 'dev_session_secret_change_me';
+// NOTE: Vercel handles the PORT automatically.
+const MONGO_URI = process.env.MONGO_URI; // This now comes from Vercel's environment variables
+const SESSION_SECRET = process.env.SESSION_SECRET || 'prod_session_secret_please_change';
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || undefined;
 const IS_PROD = process.env.NODE_ENV === 'production';
 
@@ -34,7 +34,7 @@ app.use(
   })
 );
 
-// 3. Database & Models
+// 3. Database & Models (No changes here)
 const productSchema = new mongoose.Schema({
   id: { type: Number, unique: true, index: true },
   brand: String,
@@ -62,8 +62,6 @@ const orderSchema = new mongoose.Schema({
 });
 const Product = mongoose.model('Product', productSchema);
 const Order = mongoose.model('Order', orderSchema);
-
-// Default products to seed if DB empty
 const seedProducts = [
   { id: 1, brand: 'Brand A', name: 'Men Regular Fit Solid T-Shirt', price: 799, originalPrice: 1499, category: 'T-Shirts', rating: 4.3, ratingCount: 1200, image: 'https://placehold.co/300x400/EFEFEF/AAAAAA&text=Product1' },
   { id: 2, brand: 'Brand B', name: 'Men Slim Fit Casual Shirt', price: 1199, originalPrice: 1999, category: 'Shirts', rating: 4.1, ratingCount: 850, image: 'https://placehold.co/300x400/CD5C5C/FFFFFF&text=Product2' },
@@ -74,8 +72,6 @@ const seedProducts = [
   { id: 7, brand: 'Brand A', name: 'Graphic Print T-Shirt', price: 480, originalPrice: 899, category: 'T-Shirts', rating: 4.0, ratingCount: 750, image: 'https://placehold.co/300x400/708090/FFFFFF&text=Product7' },
   { id: 8, brand: 'Brand D', name: 'Cargo Style Trousers', price: 1999, originalPrice: 3499, category: 'Jeans', rating: 4.7, ratingCount: 4200, image: 'https://placehold.co/300x400/5F9EA0/FFFFFF&text=Product8' }
 ];
-
-// Initialize session cart helper
 function getSessionCart(req) {
   if (!req.session.cart) {
     req.session.cart = [];
@@ -83,13 +79,21 @@ function getSessionCart(req) {
   return req.session.cart;
 }
 
+// Connect to DB and seed if needed
+mongoose.connect(MONGO_URI, { dbName: undefined }).then(async () => {
+  console.log('Connected to MongoDB');
+  const count = await Product.countDocuments();
+  if (count === 0) {
+    await Product.insertMany(seedProducts);
+    console.log('Seeded default products');
+  }
+}).catch(err => console.error('Failed to connect to MongoDB', err));
 
-// 5. API ROUTES / ENDPOINTS
+
+// 5. API ROUTES / ENDPOINTS (UPDATED: '/api' removed from all routes)
 
 // ====== PRODUCT ENDPOINTS ======
-
-// GET /api/products - Retrieve all products
-app.get('/api/products', async (req, res) => {
+app.get('/products', async (req, res) => {
   try {
     const products = await Product.find().sort({ id: 1 }).lean();
     res.json(products);
@@ -97,9 +101,7 @@ app.get('/api/products', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch products' });
   }
 });
-
-// GET /api/products/:id - Retrieve a single product by its ID
-app.get('/api/products/:id', async (req, res) => {
+app.get('/products/:id', async (req, res) => {
   const productId = parseInt(req.params.id, 10);
   try {
     const product = await Product.findOne({ id: productId }).lean();
@@ -110,17 +112,12 @@ app.get('/api/products/:id', async (req, res) => {
   }
 });
 
-
 // ====== CART MANAGEMENT ENDPOINTS ======
-
-// GET /api/cart - Retrieve all items in the cart
-app.get('/api/cart', (req, res) => {
+app.get('/cart', (req, res) => {
   const cart = getSessionCart(req);
   res.json(cart);
 });
-
-// POST /api/cart - Add an item to the cart
-app.post('/api/cart', async (req, res) => {
+app.post('/cart', async (req, res) => {
   const { productId, quantity } = req.body;
   const qty = parseInt(quantity || 1, 10);
   if (!productId || qty <= 0) {
@@ -142,9 +139,7 @@ app.post('/api/cart', async (req, res) => {
     res.status(500).json({ message: 'Failed to add to cart' });
   }
 });
-
-// PUT /api/cart/:productId - Update the quantity of a cart item
-app.put('/api/cart/:productId', (req, res) => {
+app.put('/cart/:productId', (req, res) => {
   const productId = parseInt(req.params.productId, 10);
   const { quantity } = req.body;
   const qty = parseInt(quantity, 10);
@@ -161,9 +156,7 @@ app.put('/api/cart/:productId', (req, res) => {
   }
   res.json(cart);
 });
-
-// DELETE /api/cart/:productId - Remove an item from the cart
-app.delete('/api/cart/:productId', (req, res) => {
+app.delete('/cart/:productId', (req, res) => {
   const productId = parseInt(req.params.productId, 10);
   const cart = getSessionCart(req);
   const itemIndex = cart.findIndex((item) => item.productId === productId);
@@ -174,11 +167,8 @@ app.delete('/api/cart/:productId', (req, res) => {
   return res.status(404).json({ message: 'Item not found in cart' });
 });
 
-
 // ====== CHECKOUT ENDPOINT ======
-
-// POST /api/checkout - Process checkout and create an order
-app.post('/api/checkout', async (req, res) => {
+app.post('/checkout', async (req, res) => {
   const { customerInfo } = req.body;
   const cart = getSessionCart(req);
   if (!customerInfo || !customerInfo.name || !customerInfo.address) {
@@ -204,29 +194,10 @@ app.post('/api/checkout', async (req, res) => {
   }
 });
 
-
 // ====== ROOT ROUTE ======
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the E-commerce API' });
 });
 
-
-// 6. Start the Server (DB connect -> seed -> listen)
-async function start() {
-  try {
-    await mongoose.connect(MONGO_URI, { dbName: undefined });
-    // Seed products if empty
-    const count = await Product.countDocuments();
-    if (count === 0) {
-      await Product.insertMany(seedProducts);
-      console.log('Seeded default products');
-    }
-    app.listen(PORT, () => {
-      console.log(`Server is running successfully on http://localhost:${PORT}`);
-    });
-  } catch (err) {
-    console.error('Failed to start server:', err);
-    process.exit(1);
-  }
-}
-start();
+// 6. EXPORT THE APP FOR VERCEL (UPDATED: No more app.listen)
+module.exports = app;

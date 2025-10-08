@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let allProducts = [];
 
-    // --- FETCH PRODUCTS (No change here) ---
+    // --- FETCH PRODUCTS (This part is updated) ---
     async function fetchProducts() {
         try {
-            const response = await fetch(`${window.__CONFIG__.API_BASE}/api/products`, { credentials: 'include' });
+            // UPDATED LINE: Using a simple relative path for the API call
+            const response = await fetch('/api/products', { credentials: 'include' });
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -77,14 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
         displayProducts(filteredProducts);
     }
     
-    // --- NEW: ADD TO CART FUNCTION ---
+    // --- ADD TO CART FUNCTION (This part is updated) ---
     /**
      * Sends a request to the backend to add a product to the cart.
      * @param {number} productId - The ID of the product to add.
      */
     async function addToCart(productId) {
         try {
-            const response = await fetch(`${window.__CONFIG__.API_BASE}/api/cart`, {
+            // UPDATED LINE: Using a simple relative path for the API call
+            const response = await fetch('/api/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -111,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- UPDATED: EVENT LISTENERS ---
+    // --- EVENT LISTENERS (No change here) ---
     filterInputs.forEach(input => {
         input.addEventListener('change', applyFilters);
     });
@@ -127,10 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.style.color = icon.classList.contains('fas') ? 'red' : '';
         }
 
-        // --- THIS IS THE UPDATED PART ---
         if (target.classList.contains('add-to-cart-btn')) {
             const productId = target.dataset.productId;
-            // Instead of an alert, we now call our new function
             addToCart(productId);
         }
     });
